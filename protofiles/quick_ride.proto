@@ -1,0 +1,74 @@
+syntax = "proto3";
+
+service QuickRideService {
+    rpc RegisterClient(RegisterRequest) returns (RegisterResponse);
+    rpc RequestRide(RideRequest) returns (RideResponse);
+    rpc DriverNotify(DriverRequest) returns (stream DriverResponse);
+    rpc SendRideResponse(RideAccept) returns (RideAcceptMessage);
+    rpc RideStatus(StatusRequest) returns (StatusResponse);
+    rpc CompleteRide(RideComplete) returns (CompleteReply);
+
+    rpc ServerStatus (ServerStatusRequest) returns (ServerStatusResponse);
+}
+
+message RegisterRequest {
+    string role = 1;
+    string client_id = 2;
+}
+
+message RegisterResponse {
+    string message = 1;
+}
+
+message RideRequest {
+    string client_id = 1;
+    string source = 2;
+    string dest = 3;
+}
+
+message RideResponse {
+    string reply = 1;
+}
+
+message DriverRequest {
+    string driver_id = 1;
+    string source = 2;
+    string dest = 3;
+}
+
+message DriverResponse {
+    string reply = 1;
+}
+
+message RideAccept {
+    string accept = 1;
+    string driver_id = 2;
+}
+
+message RideAcceptMessage {
+    string accept = 1;
+    string driver_id = 2;
+}
+
+message StatusRequest {
+    string client_id = 1;
+}
+
+message StatusResponse {
+    string status = 1;
+}
+
+message RideComplete {
+    string driver_id = 1;
+}
+
+message CompleteReply {
+    string reply = 1;
+}
+
+message ServerStatusRequest {}
+
+message ServerStatusResponse {
+  int32 available_drivers = 1;
+  int32 rides_count = 2;
+}
